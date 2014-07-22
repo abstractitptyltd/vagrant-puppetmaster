@@ -1,0 +1,51 @@
+{
+  "puppet": {
+    ":puppet_server": "puppet.example.com",
+    ":domain": "example.com",
+    ":environment": "development",
+    ":box": "puppetlabs/ubuntu-12.04-64-puppet",
+    ":nodebox": "puppetlabs/ubuntu-14.04-64-puppet",
+    ":ip": "172.0.0.2",
+    ":memory": 512,
+    ":cores": 1,
+    ":hiera_config_path": "puppet/hiera.yaml",
+    ":manifests_path": "puppet/manifests",
+    ":manifest_file": "site.pp",
+    ":module_path": [
+      "./puppet"
+    ],
+    ":puppet_options": [
+      "--verbose",
+      "--show_diff",
+      "--environment=development"
+    ],
+    ":facter": {
+        "fact_1": "test_1",
+        "fact_2": "test_2"
+    },
+    ":synced_folders": [
+      {
+        ":host": "../hieradata",
+        ":guest": "/vagrant_hieradata",
+        ":id": "hiera"
+      },
+      {
+        ":host": "../r10k_env",
+        ":guest": "/vagrant_r10k_env",
+        ":id": "r10k"
+      }
+    ],
+  	":ports": [
+  	  {
+  	    ":host": 10080,
+  	    ":guest": 80,
+  	    ":id": "web"
+  	  },
+  	  {
+	      ":host": 5000,
+	      ":guest": 5000,
+  	    ":id": "pboard"
+	    }
+  	]
+  }
+}

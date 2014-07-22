@@ -1,0 +1,59 @@
+{
+  "nodes": {
+    "precise": {
+      ":node": "precise",
+      ":box": "puppetlabs/ubuntu-12.04-64-puppet",
+      ":url": "https://vagrantcloud.com/puppetlabs/ubuntu-12.04-64-puppet",
+      ":ip": "172.0.0.4",
+      ":environment": "development",
+      ":memory": 256,
+      ":cores": 1,
+      ":facter": {
+        "fact_1": "test_1",
+        "fact_2": "test_2"
+      },
+      ":synced_folders": [
+        {
+          ":host": "/tmp/test",
+          ":guest": "/vagrant_test",
+          ":id": "test"
+        }
+      ],
+      ":ports": [
+        {
+          ":host": 4443,
+          ":guest": 433,
+          ":id": "https"
+        }
+      ]
+    }
+    "trusty": {
+      ":node": "trusty",
+      ":box": "puppetlabs/ubuntu-14.04-64-puppet",
+      ":url": "https://vagrantcloud.com/puppetlabs/ubuntu-14.04-64-puppet",
+      ":ip": "172.0.0.5",
+      ":environment": "development"
+    },
+    "centos65": {
+      ":node": "centos65",
+      ":box": "CorbanRaun/centos-6.5",
+      ":url": "https://vagrantcloud.com/CorbanRaun/centos-6.5",
+      ":ip": "172.0.0.6",
+      ":environment": "development"
+    },
+    "debian7": {
+      ":node": "debian7",
+      ":box": "puppetlabs/debian-7.4-64-puppet",
+      ":url": "https://vagrantcloud.com/puppetlabs/debian-7.4-64-puppet",
+      ":ip": "172.0.0.7",
+      ":environment": "development"
+    },
+    "debian6": {
+      ":node": "debian6",
+      ":box": "CorbanRaun/centos-6.5",
+      ":url": "https://vagrantcloud.com/CorbanRaun/centos-6.5",
+      ":ip": "172.0.0.8",
+      ":environment": "development"
+    }
+  }
+}
