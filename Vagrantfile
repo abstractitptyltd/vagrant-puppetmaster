@@ -77,6 +77,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node_values = node[1] # content of node
  
     config.vm.define node_name do |node_config|
+      # set the box to use from nodes config or puppet config
+      if node_values[':box']
+        node_config.vm.box = node_values[':box']
+      else
+        node_config.vm.box = puppet_config[':node_box']
+      end
       # configures all forwarding ports in JSON array
       if node_values[':ports']
         ports = node_values[':ports']
@@ -94,15 +100,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           node_config.vm.synced_folder folder[':host'], folder[':guest']
         end
       end
-      # setup hostname, IP, box,ram and cores
+      # setup hostname, IP,ram and cores
       node_config.vm.hostname = node_values[':node'] + '.' + puppet_config[':domain']
       if node_values[':ip']
         node_config.vm.network :private_network, ip: node_values[':ip']
-      end
-      if node_values[':box']
-        node_config.vm.box = node_values[':box']
-      else
-        node_config.vm.box = puppet_config[':node_box']
       end
       if node_values[':ram']
         node_config.vm.provider 'virtualbox' do |vb|
