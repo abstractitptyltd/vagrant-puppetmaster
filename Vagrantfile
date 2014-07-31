@@ -50,6 +50,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       v.vmx["memsize"] = puppet_config[':memory']
       v.vmx["numvcpus"] = puppet_config[':cores']
     end
+    ## setup repos
+    if puppet_config[':repo_script']
+      puppetmaster_config.vm.provision "shell", path: puppet_config[':repo_script']
+    end
+    # shell provision if set
+    if puppet_config[':shell_provision_script']
+      puppetmaster_config.vm.provision "shell", path: puppet_config[':shell_provision_script']
+    end
     puppetmaster_config.vm.provision :puppet do |puppet|
       if puppet_config[':hiera_config_path']
         puppet.hiera_config_path = puppet_config[':hiera_config_path']
@@ -134,6 +142,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         node_config.vm.provider 'vmware_fusion' do |v|
           v.vmx["numvcpus"] = 1
         end
+      end
+      ## setup repos
+      if puppet_config[':repo_script']
+        node_config.vm.provision "shell", path: puppet_config[':repo_script']
+      end
+      ## provision with shell scipt if set
+      if puppet_config[':box_shell_provision_script']
+        node_config.vm.provision "shell", path: puppet_config[':box_shell_provision_script']
       end
       ## puppet agent settings
       node_config.vm.provision :puppet_server do |puppet|
