@@ -4,7 +4,7 @@
     ":domain": "example.com",
     ":environment": "development",
     ":box": "puppetlabs/ubuntu-12.04-64-puppet",
-    ":nodebox": "puppetlabs/ubuntu-14.04-64-puppet",
+    ":node_box": "puppetlabs/ubuntu-14.04-64-puppet",
     ":ip": "172.0.0.2",
     ":memory": 512,
     ":cores": 1,
