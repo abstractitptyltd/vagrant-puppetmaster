@@ -26,6 +26,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ## A regular vm block for puppetmaster
   config.vm.define :puppetmaster do |puppetmaster_config|
     puppetmaster_config.vm.host_name = puppet_config[':puppet_server']
+    # set alias for hostmanager
+    puppetmaster_config.hostmanager.aliases = %w(puppet)
     puppetmaster_config.vm.box = puppet_config[':box']
     puppetmaster_config.vm.network "private_network", ip: puppet_config[':ip'], virtualbox__intnet: true
     # configures all forwarding ports in JSON array
@@ -108,6 +110,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           node_config.vm.synced_folder folder[':host'], folder[':guest']
         end
       end
+      # set alias for hostmanager
+      node_config.hostmanager.aliases = node_values[':node']
       # setup hostname, IP,ram and cores
       node_config.vm.hostname = node_values[':node'] + '.' + puppet_config[':domain']
       if node_values[':ip']
