@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
  
-# read vm and chef configurations from JSON files
+# read vm and puppet configurations from JSON files
 nodes_config = (JSON.parse(File.read("nodes.json")))['nodes']
 puppet_config  = (JSON.parse(File.read("puppet.json")))['puppet']
 
