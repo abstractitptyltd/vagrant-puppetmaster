@@ -10,11 +10,16 @@ domain = puppet_config[':domain']
 environment = puppet_config[':environment']
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  # setup hostmaster plugin
   config.hostmanager.enabled = true
   config.hostmanager.manage_host = false
   config.hostmanager.ignore_private_ip = false
   config.hostmanager.include_offline = true
-
+  ## puppet_install plugin if enabled
+  if puppet_config[':puppet_install_version']
+    config.puppet_install.puppet_version = puppet_config[':puppet_install_version']
+  end
+  
   # R10k settings
   if puppet_config[':r10k_puppet_dir']
     config.r10k.puppet_dir = puppet_config[':r10k_puppet_dir'] # the parent directory that contains your module directory and Puppetfile
