@@ -20,16 +20,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.puppet_install.puppet_version = puppet_config[':puppet_install_version']
   end
   
-  # R10k settings
-  if puppet_config[':r10k_puppet_dir']
-    config.r10k.puppet_dir = puppet_config[':r10k_puppet_dir'] # the parent directory that contains your module directory and Puppetfile
-  end
-  if puppet_config[':r10k_puppetfile_path']
-    config.r10k.puppetfile_path = puppet_config[':r10k_puppetfile_path'] # the path to your Puppetfile, within the repo
-  end
-
   ## A regular vm block for puppetmaster
   config.vm.define :puppetmaster do |puppetmaster_config|
+    # R10k settings
+    if puppet_config[':r10k_puppet_dir']
+      config.r10k.puppet_dir = puppet_config[':r10k_puppet_dir'] # the parent directory that contains your module directory and Puppetfile
+    end
+    if puppet_config[':r10k_puppetfile_path']
+      config.r10k.puppetfile_path = puppet_config[':r10k_puppetfile_path'] # the path to your Puppetfile, within the repo
+    end
     puppetmaster_config.vm.host_name = puppet_config[':puppet_server']
     # set alias for hostmanager
     puppetmaster_config.hostmanager.aliases = %w(puppet)
@@ -166,14 +165,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           puppet.facter = node_values[':facter']
         end
         puppet.puppet_server = puppet_config[':puppet_server']
-        puppet.options = [
-          '--verbose',
-          '--show_diff',
-          '--environment=' + node_values[':environment'],
-          #'--noop',
-          #'--debug',
-          #'--parser future',
-        ]
+        if node_values[':puppet_options']
+          puppet.options = node_values[':puppet_options']
+        else
+          puppet.options = [
+            '--verbose',
+            '--show_diff',
+            '--pluginsync',
+            '--environment=' + node_values[':environment'],
+            #'--noop',
+            #'--debug',
+            #'--parser future',
+          ]
+        end
       end # puppet agent settings
     end
   end
