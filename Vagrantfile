@@ -35,12 +35,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppetmaster_config.vm.box = puppet_config[':box']
     puppetmaster_config.vm.network "private_network", ip: puppet_config[':ip'], virtualbox__intnet: true
     # configures all forwarding ports in JSON array
-    ports = puppet_config[':ports']
-    ports.each do |port|
-      puppetmaster_config.vm.network :forwarded_port,
-        host:  port[':host'],
-        guest: port[':guest'],
-        id:    port[':id']
+    if puppet_config[':ports']
+      ports = puppet_config[':ports']
+      ports.each do |port|
+        puppetmaster_config.vm.network :forwarded_port,
+          host:  port[':host'],
+          guest: port[':guest'],
+          id:    port[':id']
+      end
     end
     # configures all synced folders in JSON array
     synced_folders = puppet_config[':synced_folders']
