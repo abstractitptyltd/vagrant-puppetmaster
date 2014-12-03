@@ -1,0 +1,14 @@
+## deploy with this command
+# r10k deploy environment -c ./r10k.yaml -pv
+
+:cachedir: /var/tmp/r10k_cache_carinity
+
+:sources:
+#  hiera:
+#    prefix: false
+#    basedir: /Users/pete/Projects/Temp/R10k/Carinity/vagrant/hiera
+#    remote: "https://bitbucket.org/carinityict/puppet-hieradata.git"
+  local:
+    prefix: false
+    basedir: /vagrant/r10kenv
+    remote: "https://bitbucket.org/carinityict/puppet-env-carinity-testing.git"

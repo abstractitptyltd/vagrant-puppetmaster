@@ -1,2 +1,3 @@
 .vagrant
 .project
+puppet/modules
