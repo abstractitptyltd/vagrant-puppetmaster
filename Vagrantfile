@@ -84,6 +84,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       end
       if puppet_config[':puppet_options']
         puppet.options = puppet_config[':puppet_options']
+      else
+        puppet.options = [
+          '--verbose',
+          '--show_diff',
+          '--environment=' + puppet_config[':environment'],
+          #'--noop',
+          #'--debug',
+          #'--parser future',
+        ]
       end
     end
   end
@@ -173,8 +182,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           puppet.options = [
             '--verbose',
             '--show_diff',
-            '--pluginsync',
-            '--environment=' + node_values[':environment'],
+            '--environment=' + puppet_config[':environment'],
             #'--noop',
             #'--debug',
             #'--parser future',
