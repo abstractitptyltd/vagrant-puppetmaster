@@ -94,7 +94,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           #'--parser future',
         ]
       end
-    end
+    end # end puppet apply
+    ## puppetmaster agent settings
+    puppetmaster_config.vm.provision :puppet_server do |puppet|
+      if puppet_config[':facter']
+        puppet.facter = puppet_config[':facter']
+      end
+      puppet.puppet_server = puppet_config[':puppet_server']
+      if puppet_config[':puppet_options']
+        puppet.options = puppet_config[':puppet_options']
+      else
+        puppet.options = [
+          '--verbose',
+          '--show_diff',
+          '--environment=' + puppet_config[':environment'],
+          #'--noop',
+          #'--debug',
+          #'--parser future',
+        ]
+      end
+    end # puppet agent settings
   end
 
   nodes_config.each do |node|
