@@ -46,9 +46,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     # configures all synced folders in JSON array
     synced_folders = puppet_config[':synced_folders']
-    synced_folders.each do |folder|
-      puppetmaster_config.vm.synced_folder folder[':host'], folder[':guest']
-    end
+    if puppet_config[':synced_folders_type']
+      synced_folders.each do |folder|
+        puppetmaster_config.vm.synced_folder folder[':host'], folder[':guest'], type: puppet_config[':synced_folders_type']
+      end
+    else
+      synced_folders.each do |folder|
+        puppetmaster_config.vm.synced_folder folder[':host'], folder[':guest']
+      end
+   end
     puppetmaster_config.vm.provider 'virtualbox' do |vb|
       vb.memory = puppet_config[':memory']
       vb.cpus = puppet_config[':cores']
