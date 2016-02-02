@@ -44,8 +44,12 @@ else
     # collection repo already installed
     echo "colection repo already installed..."
   else
+    # import gpg keys
+    echo "importing gpg keys"
+    rpm --import file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+    rpm --import https://yum.puppetlabs.com/RPM-GPG-KEY-puppetlabs
     echo "installing colection repo"
     # install puppet collection repo
-    rpm -Uvh http://yum.puppetlabs.com/$REPO_NAME.noarch.rpm
+    yum localinstall -y http://yum.puppetlabs.com/$REPO_NAME.noarch.rpm
   fi
 fi

@@ -53,7 +53,7 @@ if [ $COLLECTION ]; then
     else
       yum install -y puppetserver > /dev/null
       sudo sed -i "s/2g/512m/g" /etc/sysconfig/puppetserver
-      sudo sed -i "s/256m/128m/g" /etc/default/puppetserver
+      sudo sed -i "s/256m/128m/g" /etc/sysconfig/puppetserver
     fi
     echo "starting puppet server"
     service puppetserver restart
@@ -72,7 +72,7 @@ else
     else
       yum install -y puppetserver > /dev/null
       sudo sed -i "s/2g/512m/g" /etc/sysconfig/puppetserver
-      sudo sed -i "s/256m/128m/g" /etc/default/puppetserver
+      sudo sed -i "s/256m/128m/g" /etc/sysconfig/puppetserver
     fi
     echo "starting puppet server"
     service puppetserver restart
